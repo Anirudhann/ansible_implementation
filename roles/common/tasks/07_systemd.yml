@@ -1,0 +1,38 @@
+
+#Set up systemd for executing gunicorn_start script
+
+- name: "Restart nginx"
+  service: name=nginx state=restarted enabled=yes
+  become: yes
+
+- name: "Restart app"
+  supervisorctl: name={{app_name}} state=restarted
+  become: yes
+
+# If you have multiple apps - please restart the same
+
+
+#or you can even stop and start app like below - if required
+
+- name: "stop your_app_name app"
+  supervisorctl: name={{app_name}} state=stopped
+  become: yes
+
+- name: "start your_app_name app"
+  supervisorctl: name={{app_name}} state=started
+  become: yes
+
+
+#Ansible way of assigning ownership, group and permissions
+- name: "Change log file ownership, group and permissions"
+  become: true
+  file:
+    path: "log_path/app_name.log"
+    owner: "{{ deployer_user }}"
+    group: "{{ deployer_user }}"
+    mode: 0664 #set required permissions
+
+#or you can use shell command directly
+- name: "Changing ownership & permissions of log directory"
+  become: true
+  shell: "chown {{ deployer_user }}:{{ deployer_user }} log_path/app_name*.log && chmod 664 log_path/app_name*.log"

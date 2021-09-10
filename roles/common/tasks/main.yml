@@ -1,0 +1,12 @@
+#Main YML file
+
+- include: 01_server.yml
+  when: server_setup | bool 
+# Made First step as Optional by passing server_setup var while running ansible
+- include: 02_git.yml
+- include: 03_dependencies.yml
+- include: 04_migrations.yml
+- include: 05_nginx.yml
+- include: 06_gunicorn.yml
+- include: 07_systemd.yml
+- include: 08_sanity_check.yml

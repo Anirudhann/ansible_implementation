@@ -1,0 +1,39 @@
+#All variable declaration can be made in this file
+
+#Python Interpreter for Ansible
+ansible_python_interpreter: /usr/bin/python2
+
+#App Name
+app_name: your_app_name
+#If you want to run any other apps in the same server, then mention here
+
+#Your Repo name
+repo_name: your_repo_name
+
+#Server setup
+server_setup: False
+
+#Environment
+app_environment: test #Mention respective environment - dev or test or prod
+env_file_dir: /projects/{{repo_name}}
+
+#Deployer Users and Groups
+deployer_user: ubuntu #mention username
+deployer_group: ubuntu #mention usergroup
+
+#Github Code's Repo URL
+code_repository_url: git_url:youraccount/yourproject.git #git clone url
+git_tag: master #mention git tag or branch name you want to check out
+
+#App Directory
+app_dir: /projects/{{repo_name}}
+
+#Remote Server Details
+server_url_1: abc.def.com #mention server url here
+#any other server or LB server details can be mentioned here
+
+wsgi_server_port: 8000 #mention port here
+
+#Deploy Dir in App Directory
+deploy_dir: '{{ app_dir }}'
+

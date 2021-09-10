@@ -1,0 +1,11 @@
+#Run db migrations and get all static files
+
+- name: "Setup Environment"
+  become: true
+  shell: ". {{ deploy_dir }}/.env"
+
+- name: "Make migrations"
+command: chdir={{ deploy_dir }} #command here
+# E.g. If application is flask, then --> command: chdir={{ deploy_dir }} flask db upgrade
+become: true
+

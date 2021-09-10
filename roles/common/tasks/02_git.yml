@@ -1,0 +1,11 @@
+#Clone and pull the repository
+
+#Set up git configuration
+- name: "Set up git configuration"
+  apt: name=git state=latest
+  become: yes
+
+#Clone or pull the latest code
+- name: "Clone or pull the latest code"
+  git: repo={{ code_repository_url }}
+        dest={{ deploy_dir }} version={{git_tag}} force=yes

@@ -1,0 +1,11 @@
+#Sanity check - ping API's
+
+#Check ping urls here
+
+- name: "Check that a page returns a status 200 and fail if the response does not contain ping works fine"
+  uri:
+    validate_certs: false #In case of Test server - this can be set to false if  server requires SSL certificate verification
+    url: "https://{{server_url}}/your_app_name/ping"
+    return_content: yes
+  register: response
+  failed_when: "'ping works fine' not in response.content"

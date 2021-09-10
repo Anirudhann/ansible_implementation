@@ -1,0 +1,15 @@
+#Set up all the dependencies required by the app
+
+#Application Dependency Installation
+- name: "Application Dependency Installation"
+  become: true
+  pip:
+    requirements: "{{ deploy_dir }}/requirements.txt"
+    executable: pip3
+
+#Copy environment/configuration file if required
+- name: "Copying .env to destination"
+  copy:
+    src: /home/ubuntu/your_app_name/.env
+    remote_src: true
+    dest: "{{ env_file_dir }}/.env"

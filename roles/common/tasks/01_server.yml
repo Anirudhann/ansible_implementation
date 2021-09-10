@@ -1,0 +1,84 @@
+#Update the DNF package cache and install packages with root privileges.
+
+#Install respective programming language with version 
+#For E.g. - I installed Python3.8
+
+- name: "Ensure python3.8 is installed"
+  become: true
+  apt:
+   name: python3.8 
+   state: present
+   update_cache: true
+
+#Sometimes the server has another python version installed which may be default
+#To change it - please follow the below two steps
+
+- name: "Adding python3.8 as alternatives"
+  become: true
+  command: 'update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2'
+
+- name: "Set python3.8 as default"
+  become: true
+  command: 'update-alternatives --set python3 /usr/bin/python3.8'
+
+#To Install Nginx and Nginx-Extras
+- name: "Install nginx"
+  become: true
+  apt:
+    name: nginx=1.14.*
+    state: present
+    update_cache: true
+
+- name: "Install nginx-extras"
+  become: true
+  apt:
+    name: nginx-extras=1.14.*
+    state: present
+    update_cache: true
+
+#To install Git
+- name: "Ensure git is installed"
+  become: true
+  apt:
+   name: git
+   state: latest
+   update_cache: true
+
+#Install server dependency packages
+#Here I have shown example using python3 pip and mysql client related dependencies
+- name: "Install required packages"
+  become: true
+  apt:
+    name: ['python3-pip', 'python3.8-dev', 'libmysqlclient-dev', 'gcc','python3-mysqldb', 'libmagic-dev']
+    state: latest
+
+#Install Supervisor if required - If you plan to run your application via supervisor
+- name: "Ensure supervisor is installed"
+  become: true
+  pip:
+    name: supervisor
+    version: 4.1.1
+    executable: pip3
+    state: present
+
+#Install Gunicorn
+- name: "Ensure gunicorn is installed"
+  become: true
+  pip:
+   name: gunicorn
+   version: 20.0.1
+   executable: pip3
+   state: present
+
+#Creates App Directory
+- name: "Creates app directory"
+  become: true
+  file:
+    path: "{{app_dir}}"
+    state: directory
+    owner: "{{deployer_user}}"
+    group: "{{deployer_group}}"
+    mode: 0755 #set required permissions
+    recurse: yes
+
+#If any other directory needed, can be added as additional step in the above manner

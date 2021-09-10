@@ -1,0 +1,35 @@
+#Configure nginx web server
+
+#Setup Nginx Config
+- name: "Set up nginx config"
+  apt: name=nginx state=latest
+  become: yes
+
+#Creates SSL directory
+- name: "Creates SSL directory"
+  become: true
+  file:
+    path: /ssl_path/        #your entire path to ssl directory
+    state: directory
+
+#Write nginx conf file - One server
+- name: Write nginx conf file
+  template: src=nginx.conf dest=/nginx/{{app_environment}}_{{app_name}}_nginx.conf
+  #src is where nginx file in the location
+  #dest is where you want to copy it in server location
+  become: yes
+  notify:
+    - Restart nginx
+
+#Say you have two or more servers and want to copy same nginx config - Then use below vars, when and loop
+- name: "Write nginx conf file"
+  template: src=nginx.conf dest=/nginx/{{app_environment}}_{{app_name}}_nginx.conf
+  vars:
+    "server_url": "{{ item }}"
+  become: yes
+  notify:
+    - Restart nginx
+  when: "{{ inventory_hostname == item }}"
+  loop:
+    - "{{server_url_1}}"
+    - "{{server_url_2}}"

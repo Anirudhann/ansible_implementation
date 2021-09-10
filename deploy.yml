@@ -1,0 +1,7 @@
+#This playbook deploys the whole application stack
+
+- name: "Apply common configuration to server"
+  hosts: all #can mention required hosts
+  user: ubuntu #can mention required user
+  roles:
+    - common
