@@ -21,7 +21,7 @@
   become: true
   command: 'update-alternatives --set python3 /usr/bin/python3.8'
 
-#To Install Nginx and Nginx-Extras
+#To Install nginx and nginx-Extras
 - name: "Install nginx"
   become: true
   apt:
@@ -44,15 +44,14 @@
    state: latest
    update_cache: true
 
-#Install server dependency packages
-#Here I have shown example using python3 pip and mysql client related dependencies
+#Install server dependency packages such as python3 pip, db client and other related dependencies
 - name: "Install required packages"
   become: true
   apt:
-    name: ['python3-pip', 'python3.8-dev', 'libmysqlclient-dev', 'gcc','python3-mysqldb', 'libmagic-dev']
+    name: ['python3-pip']
     state: latest
 
-#Install Supervisor if required - If you plan to run your application via supervisor
+#Install supervisor - If you plan to run your application via supervisor
 - name: "Ensure supervisor is installed"
   become: true
   pip:
@@ -61,7 +60,7 @@
     executable: pip3
     state: present
 
-#Install Gunicorn
+#Install gunicorn
 - name: "Ensure gunicorn is installed"
   become: true
   pip:
@@ -70,7 +69,7 @@
    executable: pip3
    state: present
 
-#Creates App Directory
+#Creates app directory
 - name: "Creates app directory"
   become: true
   file:

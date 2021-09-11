@@ -1,17 +1,17 @@
-#Set up Gunicorn and configure systemd to execute gunicorn_start script
+#Set up gunicorn and configure systemd to execute gunicorn_start script
 
-#Setup Gunicorn for your_app_name app
-- name: "Setup Gunicorn for your_app_name app"
+#Setup gunicorn for your app
+- name: "Setup gunicorn for your_app_name app"
   template: src=your_app_name.conf dest=/supervisor_path/{{app_environment}}_{{app_name}}.conf
   vars:
     "supervisor_app_name": your_app_name
     "wsgi_server_port": 9000 #mention appropriate port here
   become: yes
 
-#If you multiple apps - Please setup Gunicorn for the same here
+#If you multiple apps - Please setup gunicorn for the same here
 
 #If you run apps through supervisor- Add below
-#Restart Supervisorctl
-- name: "Restart Supervisorctl"
+#Restart supervisorctl
+- name: "Restart supervisorctl"
   shell: "supervisorctl reread && service supervisor restart"
   become: true

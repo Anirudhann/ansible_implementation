@@ -1,6 +1,6 @@
 #Configure nginx web server
 
-#Setup Nginx Config
+#Setup nginx config
 - name: "Set up nginx config"
   apt: name=nginx state=latest
   become: yes
