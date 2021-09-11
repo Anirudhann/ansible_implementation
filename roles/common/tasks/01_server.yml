@@ -1,4 +1,4 @@
-#Update the DNF package cache and install packages with root privileges.
+#Install server related dependencies and packages with root privileges.
 
 #Install respective programming language with version 
 #For E.g. - I installed Python3.8
